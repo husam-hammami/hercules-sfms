@@ -1,0 +1,19 @@
+# Core Gateway Requirements
+requests>=2.31.0
+websocket-client>=1.6.0
+psutil>=5.9.0
+keyring>=24.0.0
+cryptography>=41.0.0
+getmac>=0.9.0
+
+# Protocol Libraries
+pymodbus>=3.5.0
+python-snap7>=1.3
+pycomm3>=1.2.0
+opcua>=0.98.13
+
+# Windows Service Support
+pywin32>=305; sys_platform == 'win32'
+
+# For building executable
+pyinstaller>=6.0.0

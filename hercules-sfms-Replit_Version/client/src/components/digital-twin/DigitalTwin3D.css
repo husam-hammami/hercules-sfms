@@ -1,0 +1,784 @@
+/* Digital Twin 3D Animations and Styles */
+
+.digital-twin-3d {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  perspective: 1500px;
+  transform-style: preserve-3d;
+}
+
+.digital-twin-3d.light {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+}
+
+/* Ambient Lighting Overlay */
+.ambient-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  z-index: 100;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 200, 100, 0.3) 0%, transparent 70%);
+}
+
+/* Main 3D Scene Container */
+.scene-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+}
+
+/* Marine Dock Section */
+.dock-section {
+  position: absolute;
+  left: 5%;
+  top: 40%;
+  width: 15%;
+  height: 20%;
+  transform-style: preserve-3d;
+  transform: translateZ(100px);
+}
+
+.ship-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.ship-body {
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%);
+  border-radius: 10px 10px 50px 50px;
+  position: relative;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.2),
+    inset 0 10px 20px rgba(255, 255, 255, 0.1);
+  transform: translateZ(50px);
+}
+
+.ship-body::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  animation: shipSheen 4s ease-in-out infinite;
+}
+
+@keyframes shipSheen {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.crane-arm {
+  position: absolute;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+  top: -20px;
+  left: 20%;
+  transform-origin: left center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.crane-arm::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 2px;
+  height: 30px;
+  background: #64748b;
+  bottom: 0;
+}
+
+/* Wave Effects */
+.wave-effect {
+  position: absolute;
+  bottom: -10px;
+  width: 120%;
+  height: 20px;
+  left: -10%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+  transform-origin: center;
+}
+
+.wave-effect:nth-child(2) { bottom: -15px; animation-delay: 0.5s; }
+.wave-effect:nth-child(3) { bottom: -20px; animation-delay: 1s; }
+
+/* Silos Section with 3D Effect */
+.silos-section {
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  width: 20%;
+  height: 40%;
+  display: flex;
+  gap: 5%;
+  transform-style: preserve-3d;
+  transform: translateZ(50px);
+}
+
+.silo-3d {
+  flex: 1;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+}
+
+.silo-body {
+  width: 100%;
+  height: 80%;
+  position: relative;
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+  border-radius: 10px 10px 5px 5px;
+  overflow: hidden;
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    inset -10px 0 20px rgba(0, 0, 0, 0.2),
+    inset 10px 0 20px rgba(255, 255, 255, 0.1);
+  transform: rotateX(-5deg);
+}
+
+/* Metallic Sheen Effect */
+.metallic-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  pointer-events: none;
+}
+
+/* Liquid Fill with Wave Effect */
+.silo-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, 
+    rgba(251, 191, 36, 0.9) 0%, 
+    rgba(245, 158, 11, 0.8) 50%, 
+    rgba(217, 119, 6, 0.9) 100%);
+  transition: height 2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.liquid-wave {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 20px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3) 0px,
+    transparent 50px,
+    rgba(255, 255, 255, 0.3) 100px
+  );
+  animation: waveMotion 3s linear infinite;
+}
+
+@keyframes waveMotion {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100px); }
+}
+
+/* Silo Glow Effect */
+.silo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.level-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(20px);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: rotateIndicator 10s linear infinite;
+}
+
+@keyframes rotateIndicator {
+  0% { transform: translate(-50%, -50%) translateZ(20px) rotateY(0deg); }
+  100% { transform: translate(-50%, -50%) translateZ(20px) rotateY(360deg); }
+}
+
+.silo-label {
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.digital-twin-3d.light .silo-label {
+  color: #1e293b;
+}
+
+.digital-twin-3d.dark .silo-label {
+  color: #f1f5f9;
+}
+
+.moisture-indicator {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #10b981;
+}
+
+/* Conveyor Belt 3D */
+.conveyors-section {
+  position: absolute;
+  left: 20%;
+  bottom: 30%;
+  width: 60%;
+  height: 10%;
+  transform-style: preserve-3d;
+}
+
+.conveyor-3d {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  transform-style: preserve-3d;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.conveyor-3d.active {
+  opacity: 1;
+}
+
+.conveyor-3d:nth-child(1) { left: 5%; transform: rotateY(-10deg) translateZ(30px); }
+.conveyor-3d:nth-child(2) { left: 30%; transform: translateZ(40px); }
+.conveyor-3d:nth-child(3) { left: 55%; transform: translateZ(35px); }
+.conveyor-3d:nth-child(4) { left: 80%; transform: rotateY(10deg) translateZ(30px); }
+
+.belt-texture {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #475569 0px,
+    #64748b 10px,
+    #475569 20px
+  );
+  background-size: 40px 100%;
+  border-radius: 5px;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.material-flow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.material-particle {
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #f59e0b 0%, #d97706 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.conveyor-supports {
+  position: absolute;
+  bottom: -10px;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(90deg, #1e293b 20%, transparent 20%, transparent 80%, #1e293b 80%);
+}
+
+/* Processing Plant 3D */
+.processing-plant-3d {
+  position: absolute;
+  left: 48%;
+  top: 35%;
+  width: 15%;
+  height: 30%;
+  transform-style: preserve-3d;
+  transform: translateZ(80px);
+}
+
+.plant-building {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+  position: relative;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+}
+
+.windows {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80%;
+  height: 40%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5%;
+}
+
+.window {
+  background: rgba(251, 191, 36, 0.2);
+  border: 2px solid #475569;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+.machinery-gear {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #334155 30%, transparent 30%);
+  border: 3px solid #334155;
+  border-radius: 50%;
+}
+
+.machinery-gear::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    #334155 0deg 30deg,
+    transparent 30deg 60deg
+  );
+}
+
+.chimneys {
+  position: absolute;
+  top: -15%;
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.chimney {
+  width: 15%;
+  height: 100%;
+  background: linear-gradient(180deg, #475569 0%, #334155 100%);
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.steam-particle {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.process-lights {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10%;
+}
+
+.process-light {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+  opacity: 0.5;
+}
+
+/* Bagging Section 3D */
+.bagging-section-3d {
+  position: absolute;
+  right: 25%;
+  top: 35%;
+  width: 15%;
+  height: 25%;
+  transform-style: preserve-3d;
+  transform: translateZ(60px);
+}
+
+.bagging-lines {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+}
+
+.bagging-line {
+  flex: 1;
+  position: relative;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.bagging-line.active {
+  opacity: 1;
+}
+
+.bag-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 30px;
+  background: linear-gradient(135deg, #d4a574 0%, #b8956a 100%);
+  border-radius: 2px 2px 5px 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.conveyor-belt {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    #475569 0px,
+    #64748b 5px,
+    #475569 10px
+  );
+  border-radius: 2px;
+}
+
+.pallet-stack {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  height: 60%;
+  background: repeating-linear-gradient(
+    180deg,
+    #8b7355 0px,
+    #6b5a45 3px,
+    #8b7355 6px
+  );
+  border-radius: 2px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.shrink-wrap {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  height: 60%;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Truck Loading 3D */
+.truck-loading-3d {
+  position: absolute;
+  right: 5%;
+  top: 40%;
+  width: 15%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  transform-style: preserve-3d;
+  transform: translateZ(70px);
+}
+
+.truck-bay {
+  flex: 1;
+  position: relative;
+  border: 2px dashed #475569;
+  border-radius: 5px;
+  padding: 5px;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.truck-bay.occupied {
+  opacity: 1;
+  border-style: solid;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.truck {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.truck-body {
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+  border-radius: 3px;
+  position: relative;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hydraulic-lift {
+  position: absolute;
+  bottom: -5px;
+  left: 10%;
+  width: 80%;
+  height: 5px;
+  background: linear-gradient(90deg, #64748b 0%, #94a3b8 100%);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.material-flow {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(245, 158, 11, 0.6) 0%, 
+    rgba(217, 119, 6, 0.8) 100%);
+  border-radius: 0 0 50% 50%;
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.exhaust-smoke {
+  position: absolute;
+  bottom: 10%;
+  right: -10px;
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, rgba(100, 116, 139, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.loading-progress {
+  position: absolute;
+  bottom: -15px;
+  width: 100%;
+  height: 4px;
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  transition: width 1s ease;
+  box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+}
+
+.bay-number {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #64748b;
+}
+
+/* Dynamic Shadows */
+.dynamic-shadow {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 80%;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  transform: translateX(-50%) rotateX(90deg);
+  filter: blur(8px);
+}
+
+/* Particle System */
+.particle-system {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.dust-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(251, 191, 36, 0.4);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.dust-particle:nth-child(odd) {
+  background: rgba(245, 158, 11, 0.5);
+}
+
+.dust-particle:nth-child(3n) {
+  background: rgba(217, 119, 6, 0.4);
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  position: absolute;
+  bottom: -30px;
+  width: 100%;
+  height: 8px;
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 0 10px rgba(59, 130, 246, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Hover Effects */
+.silo-3d:hover {
+  transform: translateZ(10px) scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.silo-3d:hover .silo-glow {
+  opacity: 0.6;
+}
+
+.truck-bay:hover {
+  transform: translateZ(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .silo-label, .bay-number {
+    font-size: 12px;
+  }
+  
+  .level-indicator {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scene-3d {
+    transform: scale(0.8);
+  }
+  
+  .silo-label, .bay-number, .moisture-indicator {
+    font-size: 10px;
+  }
+  
+  .level-indicator {
+    font-size: 12px;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration hints */
+.scene-3d,
+.silo-3d,
+.ship-container,
+.conveyor-3d,
+.processing-plant-3d,
+.truck-bay {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

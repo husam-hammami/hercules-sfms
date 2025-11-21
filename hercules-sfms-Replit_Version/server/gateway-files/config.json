@@ -1,0 +1,13 @@
+{
+  "activation_code": "XXXX-XXXX-XXXX",
+  "api_base": "https://www.herculesv2.com",
+  "offline_buffer_days": 7,
+  "retry_attempts": 3,
+  "log_level": "INFO",
+  "performance": {
+    "max_tags_per_second": 10000,
+    "batch_size": 100,
+    "cache_ttl_ms": 100,
+    "connection_pool_size": 10
+  }
+}
